@@ -1,0 +1,22 @@
+,,,Trekking Dataset,,,,,
+Number,name,season,budget,duration(days),difficulty,altitude(peak),start_location,walking distance
+1,Annapurna_Base_Camp,March-May & Sept-Dec,"20,000",6,Moderate,4130m,Pokhara,70 km
+2,Annapurna_Circuit,March-May & Sept-Dec,"30,000",8,Challenging,5416m,Pokhara,158 km
+3,Mardi_Himal,March-May & Oct-Nov,36500,6,Moderate,4511m,Pokhara,56 km
+4,Langtang_Kyanjin_Gompa,March-May & Sept-Nov,52500,6,Moderate,4999m,Kathmandu,82 km
+5,Ghorepani_Poonhill,March-May & Sept-Nov,35500,2,Easy,2713m,Pokhara,32 km
+6,Everest_Base_Camp,March-May & Oct-Nov,79500,13,Difficult,5547m,Kathmandu,112 km
+7,Manaslu_Circuit,March-May & Oct-Nov,92500,14,Difficult,5212m,Kathmandu,140 km
+8,Everest_Base_Camp_Gokyo_Ridge,March-May & Oct-Nov,97000,17,Difficult,5547m,Kathmandu,138 km
+9,Mera_Peak_Expedition,April-June & Oct-Nov,185000 (flight),14,Challenging,6476m,Kathmandu,96 km
+10,Lobuche_Peak,April-June & Sept-Nov,185000(flight),18,Challenging,6119m,Kathmandu,124 km
+11,Khopra_Ridge,March-June & Sept-Nov,40000,7,Moderate,4663m,Pokhara,50 km
+12,Rara_lake,March-June & Sept-Nov,40000,9,Moderate,3700m,Nepalgunj,58 km
+13,Machhapuchre_Base_Camp,March-May & Oct-Nov,12000,3,Moderate,3700m,Pokhara,63 km
+14,Makalu_Base_Camp,Jan-May & Sept-Dec,40000,11,Challenging,4870m,Kathmandu,150 km
+15,Kanchenjunga_Circuit_Trek,April-May & Oct-Nov,95000,16,Difficult,5143m,Ilam,190 km
+16,Upper_Dolpo_Trek,April-May & Oct-Nov,97000,16,Challenging + Camping,5550m,Dolpo,250 km
+17,Sherpani_Col_Pass_Trek,April-May & Oct-Nov,97000,17,Challenging + Camping,6050m,Lukla,200 km
+18,Dhaulagiri_Circuit_Trek,Jan-May & Sept-Dec,35000,9,Difficult,5200m,Beni,160 km
+19,Nar_Phu_Valley_Trek,April-May & Oct-Nov,30000,8,Moderate,5416m,Pokhara,120 km
+20,Upper_Mustang,April-May & Oct-Nov,25000,6,Moderate,4010m,Pokhara,125km
