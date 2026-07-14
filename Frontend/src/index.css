@@ -39,7 +39,6 @@ body {
 
 ::-webkit-scrollbar {
   width: 6px;
-  opacity: 0;
 }
 ::-webkit-scrollbar-track {
   background: transparent;

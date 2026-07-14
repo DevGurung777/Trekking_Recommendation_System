@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { Trek } from "../data/treks";
 
 export interface FilterState {
   budget: number;

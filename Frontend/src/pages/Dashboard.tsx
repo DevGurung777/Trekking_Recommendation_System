@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { USER_HISTORY, USER_STATS, type UserTrekHistory } from "../data/treks";
+import { useNavigate } from "react-router-dom";
+import { USER_HISTORY, USER_STATS, type UserTrekHistory } from "../data/trekData";
 
 interface DashboardProps {
   userName: string;
-  onNavigate: (page: string) => void;
 }
-
 function StarRating({ rating }: { rating: number }) {
   return (
     <div className="flex gap-0.5">
@@ -137,8 +136,12 @@ function AltitudeBar({ history }: { history: UserTrekHistory[] }) {
   );
 }
 
-export default function Dashboard({ userName, onNavigate }: DashboardProps) {
-  const [activeTab, setActiveTab] = useState<"overview" | "history" | "wishlist">("overview");
+export default function Dashboard({ userName }: DashboardProps) {
+  const navigate = useNavigate();
+
+  const [activeTab, setActiveTab] = useState<
+    "overview" | "history" | "wishlist"
+  >("overview");
 
   const WISHLIST = [
     { name: "Everest Base Camp", country: "Nepal", reason: "The ultimate Himalayan pilgrimage — Khumbu Icefall views from Kala Patthar" },
@@ -160,7 +163,7 @@ export default function Dashboard({ userName, onNavigate }: DashboardProps) {
             </h1>
           </div>
           <button
-            onClick={() => onNavigate("home")}
+            onClick={() => navigate("/")}
             className="px-5 py-2.5 rounded text-sm font-medium transition-all hover:opacity-80"
             style={{ backgroundColor: "#1E3428", color: "#D4C5A9", border: "1px solid rgba(244,236,216,0.08)" }}
           >
@@ -280,7 +283,7 @@ export default function Dashboard({ userName, onNavigate }: DashboardProps) {
                     <p className="text-sm" style={{ color: "#D4C5A9" }}>{w.reason}</p>
                   </div>
                   <button
-                    onClick={() => onNavigate("recommendations")}
+                    onClick={() => navigate("/")}
                     className="flex-shrink-0 text-xs px-3 py-1.5 rounded transition-all hover:opacity-80"
                     style={{ backgroundColor: "#1E3428", color: "#C8792A", border: "1px solid rgba(200,121,42,0.2)" }}
                   >
@@ -289,7 +292,7 @@ export default function Dashboard({ userName, onNavigate }: DashboardProps) {
                 </div>
               ))}
               <button
-                onClick={() => onNavigate("home")}
+                onClick={() => navigate("/")}
                 className="w-full py-3 rounded text-sm transition-all hover:opacity-80 mt-2"
                 style={{ backgroundColor: "#122019", color: "#8FA88C", border: "1px dashed rgba(244,236,216,0.12)" }}
               >

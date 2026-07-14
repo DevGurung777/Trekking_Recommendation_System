@@ -1,13 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface LoginProps {
   onLogin: (name: string) => void;
-  onNavigate: (page: string) => void;
 }
 
 const BG = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=900&fit=crop&auto=format";
 
-export default function Login({ onLogin, onNavigate }: LoginProps) {
+export default function Login({ onLogin }: LoginProps) {
+  const navigate = useNavigate();
   const [mode, setMode] = useState<"login" | "register">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -150,13 +151,13 @@ export default function Login({ onLogin, onNavigate }: LoginProps) {
           </button>
         </div>
 
-        <button
-          onClick={() => onNavigate("home")}
-          className="mt-6 text-sm text-center transition-colors"
-          style={{ color: "#8FA88C" }}
-        >
-          ← Back to explore
-        </button>
+<button
+  onClick={() => navigate("/")}
+  className="mt-6 text-sm text-center transition-colors"
+  style={{ color: "#8FA88C" }}
+>
+  ← Back to explore
+</button>
       </div>
     </div>
   );

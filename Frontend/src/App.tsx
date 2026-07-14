@@ -1,73 +1,100 @@
 import { useState } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Recommendations from "./pages/Recommendations";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import TrekDetail from "./pages/TrekDetail";
+
 import type { FilterState } from "./pages/Home";
 
-type Page = "home" | "recommendations" | "login" | "dashboard";
+function AppContent() {
+  const navigate = useNavigate();
 
-export default function App() {
-  const [page, setPage] = useState<Page>("home");
   const [filters, setFilters] = useState<FilterState | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
 
-  const navigate = (p: string) => {
-    if (p === "dashboard" && !isLoggedIn) {
-      setPage("login");
-      return;
-    }
-    setPage(p as Page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleSearch = (f: FilterState) => {
-    setFilters(f);
-    setPage("recommendations");
+  const handleSearch = (filters: FilterState) => {
+    setFilters(filters);
+    navigate("/recommendations");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleLogin = (name: string) => {
     setIsLoggedIn(true);
     setUserName(name);
-    setPage("dashboard");
+    navigate("/dashboard");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserName("");
-    setPage("home");
+    navigate("/");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  const showNavbar = page !== "login";
 
   return (
     <div style={{ backgroundColor: "#0C1A13", minHeight: "100vh" }}>
-      {showNavbar && (
-        <Navbar
-          currentPage={page}
-          isLoggedIn={isLoggedIn}
-          onNavigate={navigate}
-          onLogout={handleLogout}
+      <Navbar
+        isLoggedIn={isLoggedIn}
+        onLogout={handleLogout}
+      />
+
+      <Routes>
+        <Route
+          path="/"
+          element={<Home onSearch={handleSearch} />}
         />
-      )}
 
-      {page === "home" && <Home onSearch={handleSearch} />}
+        <Route
+          path="/recommendations"
+          element={<Recommendations filters={filters} />}
+        />
 
-      {page === "recommendations" && (
-        <Recommendations filters={filters} />
-      )}
+        <Route
+          path="/login"
+          element={<Login onLogin={handleLogin} />}
+        />
 
-      {page === "login" && (
-        <Login onLogin={handleLogin} onNavigate={navigate} />
-      )}
+        <Route
+          path="/dashboard"
+          element={
+            isLoggedIn ? (
+              <Dashboard userName={userName} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
 
-      {page === "dashboard" && isLoggedIn && (
-        <Dashboard userName={userName} onNavigate={navigate} />
-      )}
+        <Route
+          path="/treks/:trekId"
+          element={<TrekDetail />}
+        />
+
+        <Route
+          path="*"
+          element={<Navigate to="/" replace />}
+        />
+      </Routes>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 }
