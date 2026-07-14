@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { ALL_TREKS, type Trek } from "../data/treks";
+import { useNavigate } from "react-router-dom";
+import { ALL_TREKS, type Trek } from "../data/trekData";
+import { TREK_ID_MAP } from "../data/treks";
 import type { FilterState } from "./Home";
 
 interface RecommendationsProps {
   filters: FilterState | null;
-  onViewTrek?: (trek: Trek) => void;
 }
-
-const DIFFICULTY_ORDER = { Easy: 1, Moderate: 2, Hard: 3, Extreme: 4 };
 
 function difficultyColor(d: string) {
   if (d === "Easy") return "#4CAF7D";
@@ -123,7 +122,7 @@ function TrekCard({ trek, rank, onView }: { trek: Trek; rank: number; onView: ()
   );
 }
 
-function TrekDetailModal({ trek, onClose }: { trek: Trek; onClose: () => void }) {
+function TrekDetailModal({ trek, onClose, onViewMap }: { trek: Trek; onClose: () => void; onViewMap: () => void }) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto py-8 px-4"
@@ -183,7 +182,7 @@ function TrekDetailModal({ trek, onClose }: { trek: Trek; onClose: () => void })
           </div>
 
           {/* Highlights */}
-          <div>
+          <div className="mb-8">
             <h4 className="font-display text-lg font-semibold mb-3" style={{ color: "#F4ECD8" }}>
               Highlights
             </h4>
@@ -196,6 +195,19 @@ function TrekDetailModal({ trek, onClose }: { trek: Trek; onClose: () => void })
               ))}
             </ul>
           </div>
+
+          {/* View Route Map */}
+          {TREK_ID_MAP[trek.id] && (
+            <button
+              onClick={onViewMap}
+              className="w-full font-mono text-sm font-medium px-5 py-3 rounded cursor-pointer transition-colors duration-200"
+              style={{ backgroundColor: "#C8792A", color: "#0C1A13" }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#E8A94A")}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#C8792A")}
+            >
+              View Route Map →
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -204,6 +216,7 @@ function TrekDetailModal({ trek, onClose }: { trek: Trek; onClose: () => void })
 
 export default function Recommendations({ filters }: RecommendationsProps) {
   const [selectedTrek, setSelectedTrek] = useState<Trek | null>(null);
+  const navigate = useNavigate();
 
   const scored = ALL_TREKS
     .map((trek) => ({ trek, score: matchScore(trek, filters) }))
@@ -299,7 +312,17 @@ export default function Recommendations({ filters }: RecommendationsProps) {
       </div>
 
       {selectedTrek && (
-        <TrekDetailModal trek={selectedTrek} onClose={() => setSelectedTrek(null)} />
+        <TrekDetailModal
+          trek={selectedTrek}
+          onClose={() => setSelectedTrek(null)}
+          onViewMap={() => {
+            const geoKey = TREK_ID_MAP[selectedTrek.id];
+            if (geoKey) {
+              setSelectedTrek(null);
+              navigate(`/treks/${geoKey}`);
+            }
+          }}
+        />
       )}
     </div>
   );
